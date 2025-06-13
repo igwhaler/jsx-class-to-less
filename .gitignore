@@ -1,0 +1,4 @@
+out/
+node_modules/
+jsx-class-to-less-*.vsix
+package-lock.json
