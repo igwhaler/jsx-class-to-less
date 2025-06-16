@@ -28,12 +28,14 @@
         "title": "jsx-class-to-less"
       }
     ],
-    "keybindings": [{
+    "keybindings": [
+      {
         "command": "jsx-class-to-less",
         "key": "ctrl+l",
         "mac": "cmd+ctrl+l",
         "when": "editorTextFocus"
-    }]
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -55,7 +57,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@babel/parser": "^7.27.5",
     "@swc/core": "^1.12.0"
   }
 }
