@@ -2,7 +2,7 @@
   "name": "jsx-class-to-less",
   "displayName": "Less Tree",
   "description": "Generate Less tree from selected JSX",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.50.0"
   },
@@ -14,6 +14,10 @@
     "LESS tree",
     "JSX"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/igwhaler/jsx-class-to-less"
+  },
   "icon": "images/logo.png",
   "activationEvents": [],
   "main": "./out/extension.js",

@@ -27,57 +27,52 @@ const getClassList = (jsxElement: any, classList = [] as any) => {
     };
 
     if (isJSXElement(jsxElement?.type)) {
+
         const attributes = jsxElement?.opening?.attributes || [];
+        attributes.forEach((attr: any) => {
+            const name = attr?.name?.value;
+            const { type } = attr?.value || {};
 
-        if (attributes.length) {
-            attributes.forEach((attr: any) => {
-                const name = attr?.name?.value;
-                const { type } = attr?.value || {};
+            if (name === 'className') {
+                // className="show hide save"
+                if (type === 'StringLiteral') {
+                    const selfValue =  attr?.value?.value?.trim();
 
-                if (name === 'className') {
-                    // className="show hide save"
-                    if (type === 'StringLiteral') {
-                        const selfValue =  attr?.value?.value?.trim();
-
-                        if (selfValue) {
-                            selfClass.value = selfClass.value.concat(selfValue.split(" "));
-                        }
-                    }
-
-                    // className={css.show}、className={css['abc']}
-                    if (type === 'JSXExpressionContainer') {
-                        let selfValue;
-                        const expression = attr?.value?.expression;
-
-                        if (expression?.type === 'MemberExpression') {
-                            const property = expression?.property;
-
-                            // className={css.show}
-                            if (property?.type === 'Identifier') {
-                                selfValue = property?.value as never;
-                            }
-
-                            // className={css['abc']}
-                            if (property?.type === 'Computed') {
-                                selfValue = property?.expression?.value as never;
-                            }
-                        }
-
-                        if (selfValue) {
-                            selfClass.value.push(selfValue);
-                        }
+                    if (selfValue) {
+                        selfClass.value = selfClass.value.concat(selfValue.split(" "));
                     }
                 }
-            });
-        }
 
-        const children = jsxElement?.children || [];
+                // className={css.show}、className={css['abc']}
+                if (type === 'JSXExpressionContainer') {
+                    let selfValue;
+                    const expression = attr?.value?.expression;
 
-        if (children.length) {
-            children.forEach((ele: any) => {
-                getClassList(ele, selfClass.children);
-            });
-        }
+                    if (expression?.type === 'MemberExpression') {
+                        const property = expression?.property;
+
+                        // className={css.show}
+                        if (property?.type === 'Identifier') {
+                            selfValue = property?.value as never;
+                        }
+
+                        // className={css['abc']}
+                        if (property?.type === 'Computed') {
+                            selfValue = property?.expression?.value as never;
+                        }
+                    }
+
+                    if (selfValue) {
+                        selfClass.value.push(selfValue);
+                    }
+                }
+            }
+        });
+
+        const children = jsxElement.children || [];
+        children?.forEach((ele: any) => {
+            getClassList(ele, selfClass.children);
+        });
 
         classList.push(selfClass);
     }
